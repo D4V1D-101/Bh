@@ -50,47 +50,32 @@ class Login extends SimplePage
     }
 
     public function authenticate(): ?LoginResponse
-    {
-        try {
-            $this->rateLimit(5);
-        } catch (TooManyRequestsException $exception) {
-            $this->getRateLimitedNotification($exception)?->send();
-
-            return null;
-        }
-
-        $data = $this->form->getState();
-
-        // Keressük meg a felhasználót email alapján
-        $user = User::where('email', $data['email'])->first();
-
-        if (!$user) {
-            $this->throwFailureValidationException();
-        }
-
-        // Ellenőrizzük a jelszót az egyéni logikával
-        if (!$user->salt || !$user->password_hash || !User::verifyPassword($data['password'], $user->password_hash, $user->salt)) {
-            $this->throwFailureValidationException();
-        }
-
-        // Bejelentkeztetjük a felhasználót
-        Filament::auth()->login($user, $data['remember'] ?? false);
-
-        $user = Filament::auth()->user();
-
-        if (
-            ($user instanceof FilamentUser) &&
-            (! $user->canAccessPanel(Filament::getCurrentPanel()))
-        ) {
-            Filament::auth()->logout();
-
-            $this->throwFailureValidationException();
-        }
-
-        session()->regenerate();
-
-        return app(LoginResponse::class);
+{
+    try {
+        $this->rateLimit(5);
+    } catch (TooManyRequestsException $exception) {
+        $this->getRateLimitedNotification($exception)?->send();
+        return null;
     }
+
+    $data = $this->form->getState();
+    $user = User::where('email', $data['email'])->first();
+
+    if (!$user) {
+        $this->throwFailureValidationException();
+    }
+
+    // Ellenőrizzük a jelszót az egyéni logikával
+    if (!$user->salt || !$user->password_hash || !User ::verifyPassword($data['password'], $user->password_hash, $user->salt)) {
+        $this->throwFailureValidationException();
+    }
+
+    // Bejelentkeztetjük a felhasználót
+    Filament::auth()->login($user, $data['remember'] ?? false);
+    session()->regenerate();
+
+    return app(LoginResponse::class);
+}
 
     protected function getRateLimitedNotification(TooManyRequestsException $exception): ?Notification
     {

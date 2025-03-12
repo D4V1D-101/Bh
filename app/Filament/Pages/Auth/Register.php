@@ -62,45 +62,35 @@ class Register extends SimplePage
     }
 
     public function register(): ?RegistrationResponse
-    {
-        try {
-            $this->rateLimit(2);
-        } catch (TooManyRequestsException $exception) {
-            $this->getRateLimitedNotification($exception)?->send();
-
-            return null;
-        }
-
-        $user = $this->wrapInDatabaseTransaction(function () {
-            $this->callHook('beforeValidate');
-
-            $data = $this->form->getState();
-
-            $this->callHook('afterValidate');
-
-            $data = $this->mutateFormDataBeforeRegister($data);
-
-            $this->callHook('beforeRegister');
-
-            $user = $this->handleRegistration($data);
-
-            $this->form->model($user)->saveRelationships();
-
-            $this->callHook('afterRegister');
-
-            return $user;
-        });
-
-        event(new Registered($user));
-
-        $this->sendEmailVerificationNotification($user);
-
-        Filament::auth()->login($user);
-
-        session()->regenerate();
-
-        return app(RegistrationResponse::class);
+{
+    try {
+        $this->rateLimit(2);
+    } catch (TooManyRequestsException $exception) {
+        $this->getRateLimitedNotification($exception)?->send();
+        return null;
     }
+
+    $user = $this->wrapInDatabaseTransaction(function () {
+        $data = $this->form->getState();
+        $hashData = User::hashPasswordWithSalt($data['password']);
+
+        // Töröljük a passwordConfirmation mezőt
+        unset($data['passwordConfirmation'], $data['password']);
+
+        // Bővítsük az adatokat a hash és salt értékekkel
+        $data['salt'] = $hashData['salt'];
+        $data['password_hash'] = $hashData['password_hash'];
+        $data['role'] = 'USER'; // Alapértelmezett szerep
+
+        // Közvetlenül a User modelt használjuk
+        return User::create($data);
+    });
+
+    Filament::auth()->login($user);
+    session()->regenerate();
+
+    return app(RegistrationResponse::class);
+}
 
     protected function getRateLimitedNotification(TooManyRequestsException $exception): ?Notification
     {
