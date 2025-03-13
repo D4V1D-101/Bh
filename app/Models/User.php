@@ -43,19 +43,31 @@ class User extends Authenticatable implements FilamentUser
     }
 
     public static function hashPasswordWithSalt(string $password): array
-{
-    // Generálunk egy véletlenszerű salt-ot
-    $salt = random_bytes(16);
-    $salt_base64 = base64_encode($salt);
+    {
+        // Generate a random salt
+        $salt = random_bytes(16);
+        $salt_base64 = base64_encode($salt);
 
-    // Használjuk a Laravel Hash osztályát az Argon2id hash-eléshez
-    $hash = password_hash($password . $salt_base64, PASSWORD_ARGON2ID);
+        // Use PHP's native Argon2id function with matching parameters to C#
+        $options = [
+            'memory_cost' => 65536, // 64MB, same as in C#
+            'time_cost' => 4,       // 4 iterations, same as in C#
+            'threads' => 1,         // Parallelism, same as in C#
+        ];
 
-    return [
-        'password_hash' => $hash,
-        'salt' => $salt_base64
-    ];
-}
+        // Hash the password with the salt
+        $hash = password_hash($password, PASSWORD_ARGON2ID, $options);
+
+        return [
+            'password_hash' => $hash,
+            'salt' => $salt_base64
+        ];
+    }
+    public static function verifyPassword(string $password, string $storedHash, string $salt): bool
+    {
+        // Verify password using the stored hash
+        return password_verify($password, $storedHash);
+    }
 
     // Remember token lekérése
     public function getRememberToken()

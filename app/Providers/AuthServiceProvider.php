@@ -2,7 +2,8 @@
 
 namespace App\Providers;
 
-use App\Providers\CustomUser ;
+
+use App\Http\Controllers\CustomUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 

@@ -65,12 +65,12 @@ class Login extends SimplePage
         $this->throwFailureValidationException();
     }
 
-    // Ellenőrizzük a jelszót az egyéni logikával
-    if (!$user->salt || !$user->password_hash || !User ::verifyPassword($data['password'], $user->password_hash, $user->salt)) {
+    // Check password using our custom verification method
+    if (!User::verifyPassword($data['password'], $user->password_hash, $user->salt)) {
         $this->throwFailureValidationException();
     }
 
-    // Bejelentkeztetjük a felhasználót
+    // Log in the user
     Filament::auth()->login($user, $data['remember'] ?? false);
     session()->regenerate();
 

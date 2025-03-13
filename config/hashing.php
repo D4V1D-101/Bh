@@ -15,14 +15,12 @@ return [
     |
     */
     'default' => 'argon2id',
-
+    'driver' => App\Auth\Argon2idHasher::class,
     'argon2id' => [
         'memory' => 65536,
-        'threads' => 8,
+        'threads' => 1,
         'time' => 4,
     ],
-
-    'driver' => 'argon2id',
 
     /*
     |--------------------------------------------------------------------------
@@ -53,8 +51,8 @@ return [
 
     'argon' => [
         'memory' => 65536,
-        'threads' => 8,
-        'time' => 4,
+        'threads' => 1,
+        'time' => 2,
         'verify' => true,
     ],
 

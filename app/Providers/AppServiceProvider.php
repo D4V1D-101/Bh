@@ -2,10 +2,9 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Event;
+use App\Auth\Argon2idHasher;
+use Illuminate\Hashing\HashManager;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Pagination\Paginator;
-use Filament\Events\Auth\Login;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,24 +13,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
-    }
-
-    /**
-     * Bootstrap any application services.
-     */
-    public function boot(): void
-    {
-        // Kijelentkezéskor töröljük a felhasználó összes tokenjét
-        Event::listen(\Filament\Events\Auth\Logout::class, function ($event) {
-            $event->user->tokens()->delete();
-        });
-
-        // Bejelentkezéskor, ha nincs "remember me", töröljük a korábbi tokeneket
-        Event::listen(Login::class, function ($event) {
-            if (!$event->remember) {
-                $event->user->deleteRememberToken();
-            }
+        $this->app->extend('hash', function ($service, $app) {
+            $service->extend('custom-argon2id', function () {
+                return new Argon2idHasher([
+                    'memory' => 65536,
+                    'time' => 4,
+                    'threads' => 8,
+                ]);
+            });
+            return $service;
         });
     }
+
+    // ...
 }
