@@ -62,35 +62,34 @@ class Register extends SimplePage
     }
 
     public function register(): ?RegistrationResponse
-{
-    try {
-        $this->rateLimit(2);
-    } catch (TooManyRequestsException $exception) {
-        $this->getRateLimitedNotification($exception)?->send();
-        return null;
+    {
+        try {
+            $this->rateLimit(2);
+        } catch (TooManyRequestsException $exception) {
+            $this->getRateLimitedNotification($exception)?->send();
+            return null;
+        }
+
+        $user = $this->wrapInDatabaseTransaction(function () {
+            $data = $this->form->getState();
+            $hashData = User::hashPasswordWithSalt($data['password']);
+
+            // Töröljük a passwordConfirmation mezőt és a password mezőt
+            unset($data['passwordConfirmation'], $data['password']);
+
+            // Bővítsük az adatokat a hash értékkel
+            $data['password_hash'] = $hashData['password_hash'];
+            $data['role'] = 'USER'; // Alapértelmezett szerep
+
+            // Közvetlenül a User modelt használjuk
+            return User::create($data);
+        });
+
+        Filament::auth()->login($user);
+        session()->regenerate();
+
+        return app(RegistrationResponse::class);
     }
-
-    $user = $this->wrapInDatabaseTransaction(function () {
-        $data = $this->form->getState();
-        $hashData = User::hashPasswordWithSalt($data['password']);
-
-        // Töröljük a passwordConfirmation mezőt
-        unset($data['passwordConfirmation'], $data['password']);
-
-        // Bővítsük az adatokat a hash és salt értékekkel
-        $data['salt'] = $hashData['salt'];
-        $data['password_hash'] = $hashData['password_hash'];
-        $data['role'] = 'USER'; // Alapértelmezett szerep
-
-        // Közvetlenül a User modelt használjuk
-        return User::create($data);
-    });
-
-    Filament::auth()->login($user);
-    session()->regenerate();
-
-    return app(RegistrationResponse::class);
-}
 
     protected function getRateLimitedNotification(TooManyRequestsException $exception): ?Notification
     {
@@ -111,7 +110,7 @@ class Register extends SimplePage
      */
     protected function handleRegistration(array $data): Model
     {
-        // Argon2id hashelés egyéni salt-tal
+        // Argon2id hashelés
         $hashData = User::hashPasswordWithSalt($data['password']);
 
         // Töröljük a passwordConfirmation mezőt, mert már nincs rá szükség
@@ -119,13 +118,12 @@ class Register extends SimplePage
             unset($data['passwordConfirmation']);
         }
 
-        // Töröljük a password mezőt is, hiszen helyette a hash-t és salt-ot tároljuk
+        // Töröljük a password mezőt is, hiszen helyette a hash-t tároljuk
         if (isset($data['password'])) {
             unset($data['password']);
         }
 
-        // Bővítsük az adatokat a hash és salt értékekkel
-        $data['salt'] = $hashData['salt'];
+        // Hozzáadjuk a password_hash mezőt
         $data['password_hash'] = $hashData['password_hash'];
         $data['role'] = 'USER'; // Alapértelmezett szerep
 

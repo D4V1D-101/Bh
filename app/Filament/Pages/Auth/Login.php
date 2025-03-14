@@ -50,32 +50,32 @@ class Login extends SimplePage
     }
 
     public function authenticate(): ?LoginResponse
-{
-    try {
-        $this->rateLimit(5);
-    } catch (TooManyRequestsException $exception) {
-        $this->getRateLimitedNotification($exception)?->send();
-        return null;
+    {
+        try {
+            $this->rateLimit(5);
+        } catch (TooManyRequestsException $exception) {
+            $this->getRateLimitedNotification($exception)?->send();
+            return null;
+        }
+
+        $data = $this->form->getState();
+        $user = User::where('email', $data['email'])->first();
+
+        if (!$user) {
+            $this->throwFailureValidationException();
+        }
+
+        // Check password using our custom verification method
+        if (!User::verifyPassword($data['password'], $user->password_hash)) {
+            $this->throwFailureValidationException();
+        }
+
+        // Log in the user
+        Filament::auth()->login($user, $data['remember'] ?? false);
+        session()->regenerate();
+
+        return app(LoginResponse::class);
     }
-
-    $data = $this->form->getState();
-    $user = User::where('email', $data['email'])->first();
-
-    if (!$user) {
-        $this->throwFailureValidationException();
-    }
-
-    // Check password using our custom verification method
-    if (!User::verifyPassword($data['password'], $user->password_hash, $user->salt)) {
-        $this->throwFailureValidationException();
-    }
-
-    // Log in the user
-    Filament::auth()->login($user, $data['remember'] ?? false);
-    session()->regenerate();
-
-    return app(LoginResponse::class);
-}
 
     protected function getRateLimitedNotification(TooManyRequestsException $exception): ?Notification
     {

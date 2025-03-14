@@ -21,13 +21,11 @@ class User extends Authenticatable implements FilamentUser
         'name',
         'email',
         'password_hash',
-        'salt',
         'role'
     ];
 
     protected $hidden = [
         'password_hash',
-        'salt',
     ];
 
     protected $casts = [
@@ -44,9 +42,8 @@ class User extends Authenticatable implements FilamentUser
 
     public static function hashPasswordWithSalt(string $password): array
     {
-        // Generate a random salt
+        // Generate a random salt - this will be incorporated into the hash
         $salt = random_bytes(16);
-        $salt_base64 = base64_encode($salt);
 
         // Use PHP's native Argon2id function with matching parameters to C#
         $options = [
@@ -60,12 +57,14 @@ class User extends Authenticatable implements FilamentUser
 
         return [
             'password_hash' => $hash,
-            'salt' => $salt_base64
+            // No longer returning separate salt
         ];
     }
-    public static function verifyPassword(string $password, string $storedHash, string $salt): bool
+
+    public static function verifyPassword(string $password, string $storedHash): bool
     {
         // Verify password using the stored hash
+        // The salt is already incorporated in the hash
         return password_verify($password, $storedHash);
     }
 
