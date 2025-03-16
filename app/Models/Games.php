@@ -36,4 +36,8 @@ class Games extends Model
     {
         return $this->belongsToMany(Genres::class, 'game_genres', 'game_id', 'genre_id');
     }
+    public function articles()
+    {
+        return $this->hasMany(Article::class, 'game_id');
+    }
 }

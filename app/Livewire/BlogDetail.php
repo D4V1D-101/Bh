@@ -1,23 +1,40 @@
 <?php
-
 namespace App\Livewire;
 
 use App\Models\Article;
+use App\Models\Genres;
 use Livewire\Component;
 
 class BlogDetail extends Component
 {
-    public $blogID = null;
-    public function mount($id){
-        $this->blogID = $id;
+    public $articleId;
 
+    public function mount($id)
+    {
+        $this->articleId = $id;
     }
+
     public function render()
     {
-        $article = Article::select('articles.*','genres.name as genres_name')->leftJoin('genres','genres.id','articles.game_id')
-        ->findOrFail($this->blogID);
-        return view('livewire.blog-detail',[
-            'article' => $article
+        $article = Article::findOrFail($this->articleId);
+        $categories = Genres::all();
+        $latestArticles = Article::where('id', '!=', $this->articleId)
+            ->orderBy('created_at', 'DESC')
+            ->limit(3)
+            ->get();
+
+        // Get related articles from the same game
+        $relatedArticles = Article::where('id', '!=', $this->articleId)
+            ->where('game_id', $article->game_id)
+            ->orderBy('created_at', 'DESC')
+            ->limit(3)
+            ->get();
+
+        return view('livewire.blog-detail', [
+            'article' => $article,
+            'categories' => $categories,
+            'latestArticles' => $latestArticles,
+            'relatedArticles' => $relatedArticles
         ]);
     }
 }

@@ -14,8 +14,17 @@ class Genres extends Model
     protected $fillable = ['name', 'slug'];
     public $timestamps = false;
 
-    public function articles()
+    public function games()
     {
-        return $this->hasMany(Article::class);
+        return $this->belongsToMany(Games::class, 'game_genres', 'genre_id', 'game_id');
+    }
+
+    public function getArticles()
+    {
+        return Article::whereHas('game', function($query) {
+            $query->whereHas('genres', function($q) {
+                $q->where('genres.id', $this->id);
+            });
+        });
     }
 }

@@ -5,15 +5,19 @@ use App\Models\Article;
 use App\Models\Genres;
 use Livewire\Component;
 use Livewire\Attributes\Url;
+use Livewire\WithPagination;
 
 class ShowBlog extends Component
 {
+    use WithPagination;
+
     #[Url]
     public $categorySlug = null;
 
     public function render()
     {
         $categories = Genres::all();
+        $latestArticles = Article::orderBy('created_at', 'DESC')->limit(3)->get();
 
         if (!empty($this->categorySlug)) {
             $category = Genres::where('slug', $this->categorySlug)->first();
@@ -22,14 +26,15 @@ class ShowBlog extends Component
                 abort(404);
             }
 
-            $articles = Article::where('game_id', $category->id)
-                ->orderBy('created_at', 'DESC')
-                ->get();
+            // Get articles related to games that belong to this genre
+            $articles = Article::whereHas('game', function($query) use ($category) {
+                $query->whereHas('genres', function($q) use ($category) {
+                    $q->where('genres.id', $category->id);
+                });
+            })->orderBy('created_at', 'DESC')->paginate(10);
         } else {
-            $articles = Article::orderBy('created_at', 'DESC')->get();
+            $articles = Article::orderBy('created_at', 'DESC')->paginate(10);
         }
-
-        $latestArticles = Article::orderBy('created_at', 'DESC')->limit(3)->get();
 
         return view('livewire.show-blog', [
             'articles' => $articles,

@@ -13,4 +13,13 @@ class Member extends Model
     {
         return $value ?? 'https://i.postimg.cc/HsZDgXD8/NoImage.webp';
     }
+    public function developedGames()
+    {
+        return $this->hasMany(Games::class, 'developer_id');
+    }
+
+    public function publishedGames()
+    {
+        return $this->hasMany(Games::class, 'publisher_id');
+    }
 }
