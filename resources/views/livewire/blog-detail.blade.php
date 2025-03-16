@@ -3,10 +3,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-8 mx-auto text-center">
-                    <h2 class="mb-3 text-capitalize">{{$article->title}}</h2>
+                    <h2 class="mb-3 text-capitalize">{{ $article->game->name}}</h2>
                     <ul class="list-inline breadcrumbs text-capitalize" style="font-weight:500">
-                        <li class="list-inline-item"><a href="{{route('home')}}">Home</a></li>
-                        <li class="list-inline-item">/ &nbsp; <a href="{{route('blog')}}">News</a></li>
+                        <li class="list-inline-item"><a href="{{route('blog')}}">News</a></li>
+                        <li class="list-inline-item">/ &nbsp; <a href="">{{$article->title}}</a></li>
                     </ul>
                 </div>
             </div>
@@ -36,11 +36,6 @@
                         {!! $article->content !!}
                     </div>
 
-                    @if ($article->game)
-                    <div class="mt-5 pt-3">
-                        <p class="mb-0">Related Game: {{ $article->game->name }}</p>
-                    </div>
-                    @endif
                 </div>
             </div>
         </div>
