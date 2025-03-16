@@ -36,6 +36,7 @@
 			<a class="navbar-brand" wire:navigate href="{{route('home')}}">
 				<img loading="prelaod" decoding="async" class="img-fluid" width="160" src="{{asset('/front/images/pxArt.png')}}" alt="Brickhub">
 			</a>
+
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -47,22 +48,33 @@
 					<li class="nav-item "><a wire:navigate class="nav-link " href="{{ route('blog') }}">News</a></li>
 					<li class="nav-item "><a wire:navigate class="nav-link " href="{{ route('faqs') }}">FAQ</a></li>
 				</ul>
+                <div class="profile">
+                <div class="nav-item ">
+                @if(Auth::check())
+                    {{ Auth::user()->name }}
+                @else
+                @endif
+                </div>
                 @if (Auth::check())
-    <form method="GET" action="{{ route('user.logout') }}">
-        @csrf
+                <form method="GET" action="{{ route('user.logout') }}">
+                    @csrf
         <button type="submit" class="btn btn-outline-primary authbutton">Logout</button>
         @if (Auth::user()->isAdmin())
             <a href="{{ route('filament.admin.auth.login') }}" class="btn btn-outline-primary authbutton">Admin</a>
         @endif
     </form>
+        @else
+            <a href="{{ route('filament.admin.auth.register') }}" class="btn btn-outline-primary authbutton">Register</a>
+            <a href="{{ route('filament.admin.auth.login') }}" class="btn btn-outline-primary authbutton">Login</a>
+        @endif
 
-@else
-    <a href="{{ route('filament.admin.auth.register') }}" class="btn btn-outline-primary authbutton">Register</a>
-    <a href="{{ route('filament.admin.auth.login') }}" class="btn btn-outline-primary authbutton">Login</a>
-@endif
-			</div>
+                </div>
+        </div>
+
 		</div>
 	</nav>
+
+
 </header>
 
 {{ $slot }}
