@@ -25,7 +25,9 @@
                                         <article class="blog-post">
                                             <div class="post-slider slider-sm rounded">
                                                 @if ($singleArticle->image)
-                                                    <img loading="lazy" decoding="async" src="{{ $singleArticle->image }}" alt="{{ $singleArticle->title }}">
+                                                    <div class="image-container" style="height: 500px; overflow: hidden;">
+                                                        <img loading="lazy" decoding="async" src="{{ $singleArticle->image }}" alt="{{ $singleArticle->title }}" class="img-fluid w-100 h-100 object-cover">
+                                                    </div>
                                                 @endif
                                             </div>
                                             <div class="pt-4">
@@ -59,9 +61,9 @@
                                 <ul class="list-unstyled widget-list">
                                     <li class="d-flex widget-post align-items-center">
                                         <a class="text-black" wire:navigate href="{{ route('blogDetail', $latestArticle->id) }}">
-                                            <div class="widget-post-image flex-shrink-0 me-3">
+                                            <div class="widget-post-image flex-shrink-0 me-3" style="width: 80px; height: 80px; overflow: hidden;">
                                                 @if ($latestArticle->image)
-                                                    <img loading="lazy" decoding="async" src="{{ $latestArticle->image }}" alt="{{ $latestArticle->title }}">
+                                                    <img loading="lazy" decoding="async" src="{{ $latestArticle->image }}" alt="{{ $latestArticle->title }}" class="img-fluid w-100 h-100 object-cover">
                                                 @endif
                                             </div>
                                         </a>

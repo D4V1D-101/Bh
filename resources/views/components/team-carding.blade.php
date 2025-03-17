@@ -1,11 +1,10 @@
 <div class="card bg-transparent border-0 text-center">
     <div class="card-img">
         @if($member->image!='')
-
-        <img loading="lazy" decoding="async" src="{{ $member->image }}" alt="{{ $member->image }}" class="rounded w-100" width="300" height="332">
-
+        <div style="width: 300px; height: 300px; overflow: hidden; margin: 0 auto;">
+            <img loading="lazy" decoding="async" src="{{ $member->image }}" alt="{{ $member->name }}" class="rounded w-100 h-100 object-fit-cover">
+        </div>
         @endif
-
 
         @if ($member->git_url!=''||$member->linkedin_url!='')
             <ul class="card-social list-inline">
