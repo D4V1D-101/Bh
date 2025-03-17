@@ -19,7 +19,7 @@
                 <div class="col-lg-10 text-center">
                     <div class="mb-5">
                         <h2 class="mb-4" style="line-height:1.5">{{ $article->title }}</h2>
-                        <span>{{ \Carbon\Carbon::parse($article->created_at)->format('d, M Y') }} <span class="mx-2">/</span> </span>
+                        <span>{{ \Carbon\Carbon::parse($article->created_at)->format('Y M d')}} <span class="mx-2"></span> </span>
                         <br>
                         <p class="list-inline-item ml-1">Author: {{ $article->author }}</p>
                     </div>

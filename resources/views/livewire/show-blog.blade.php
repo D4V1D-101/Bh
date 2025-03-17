@@ -29,7 +29,7 @@
                                                 @endif
                                             </div>
                                             <div class="pt-4">
-                                                <p class="mb-3">{{ \Carbon\Carbon::parse($singleArticle->created_at)->format('d M, Y') }}</p>
+                                                <p class="mb-3">{{ \Carbon\Carbon::parse($singleArticle->created_at)->format('Y M d') }}</p>
                                                 <h2 class="h4"><a class="text-black" wire:navigate href="{{ route('blogDetail', $singleArticle->id) }}">{{ $singleArticle->title }}</a></h2>
                                                 <a wire:navigate href="{{ route('blogDetail', $singleArticle->id) }}" class="text-primary fw-bold" aria-label="Read the full article by clicking here">Read More</a>
                                             </div>

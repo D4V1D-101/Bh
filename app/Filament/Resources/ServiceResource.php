@@ -30,8 +30,8 @@ class ServiceResource extends Resource
                 TextInput::make('short_desc')
                     ->label('Short Description')
                     ->required()
-                    ->maxLength(30)
-                    ->helperText('Max 30 characters'),
+                    ->maxLength(35)
+                    ->helperText('Max 35 characters'),
                 TextInput::make('exe_name')->label('Exe Name')->columnSpan(2)->required(),
                 RichEditor::make('description')
                     ->required()

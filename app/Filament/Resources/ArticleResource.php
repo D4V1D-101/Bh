@@ -68,17 +68,7 @@ class ArticleResource extends Resource
             ->afterStateUpdated(function (callable $set, $state) {
                 $set('genre_id', null); // Reset genre selection
             }),
-            Select::make('genre_id')
-            ->label('Genre')
-            ->options(function (callable $get) {
-                $gameId = $get('game_id');
-                return Genres::whereIn('id', function ($query) use ($gameId) {
-                    $query->select('genre_id')
-                        ->from('game_genres')
-                        ->where('game_id', $gameId);
-                })->pluck('name', 'id');
-            })
-            ->required(),
+
 
         ]);
 }
