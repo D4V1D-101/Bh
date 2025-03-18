@@ -22,7 +22,7 @@
 	<div class="container">
 		<div class="row g-5">
 
-			<div class="col-lg-12">
+			<div class="col-lg-12 text-center">
 				<div class="content">
 					{!!$service->description!!}
 				</div>
