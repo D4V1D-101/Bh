@@ -32,7 +32,14 @@ class MemberResource extends Resource
                 TextInput::make('designation')->required()->placeholder('Enter Designation'),
                 TextInput::make('git_url')->url()->label('GitHub URL')->placeholder('Enter URL'),
                 TextInput::make('linkedin_url')->url()->label('LinkedIn URL')->placeholder('Enter URL'),
-                TextInput::make('image')->url()->label('image')->placeholder('Enter URL')->columnSpan(2),
+                TextInput::make('image')->url()->label('image')->placeholder('Enter URL')->columnSpan(2) ->rules([
+                    'required',
+                    'url',
+                    'ends_with:.jpg,.jpeg,.png'
+                ])
+                ->validationMessages([
+                    'ends_with' => 'The URL must ends with jpg / jpeg /png'
+                ]),
 
             ]);
     }
@@ -41,7 +48,7 @@ class MemberResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name'),
+                TextColumn::make('name')->searchable(),
                 TextColumn::make('designation'),
                 ImageColumn::make('image'),
                 Tables\Columns\TextColumn::make('name')

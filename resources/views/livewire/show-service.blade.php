@@ -24,7 +24,10 @@
 
 			<div class="col-lg-12 text-center">
 				<div class="content">
+                    <h2 class="mb-3">{{$service->release_date}}</h2>
 					{!!$service->description!!}
+                    <br>
+                    <img src="{{ asset($service->image_path) }}" alt="" class="image-fluid">
 				</div>
 			</div>
 		</div>

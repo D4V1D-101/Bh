@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Article extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'image', 'author', 'content', 'status', 'game_id'];
+    protected $fillable = ['title', 'image', 'author', 'content', 'game_id'];
     public function game()
     {
         return $this->belongsTo(Games::class, 'game_id');

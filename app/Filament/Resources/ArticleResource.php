@@ -56,18 +56,25 @@ class ArticleResource extends Resource
             TextInput::make('image')
             ->url()
             ->label('Image')
+            ->url()
             ->placeholder('Enter URL')
             ->columnSpan(2)
-            ->rules('required', 'url', 'ends_with:.jpg,.jpeg,.png')
-            ->helperText('Please enter a valid image URL ending with .jpg, .jpeg, or .png.'),
-            Select::make('game_id')
-            ->required()
-            ->label('Game')
-            ->options(Games::all()->pluck('name', 'id'))
-            ->reactive()
-            ->afterStateUpdated(function (callable $set, $state) {
-                $set('genre_id', null); // Reset genre selection
-            }),
+            ->rules([
+                'required',
+                'url',
+                'ends_with:.jpg,.jpeg,.png'
+            ])
+            ->validationMessages([
+                'ends_with' => 'The URL must ends with jpg / jpeg /png'
+            ]),
+                Select::make('game_id')
+                ->required()
+                ->label('Game')
+                ->options(Games::all()->pluck('name', 'id'))
+                ->reactive()
+                ->afterStateUpdated(function (callable $set, $state) {
+                    $set('genre_id', null);
+                }),
 
 
         ]);
@@ -77,11 +84,11 @@ class ArticleResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('title')->searchable(),
-                TextColumn::make('author'),
+                TextColumn::make('author')->searchable(),
                 TextColumn::make('game.name')->label('Game')->searchable(),
             ])
             ->filters([
-                //
+
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -96,7 +103,7 @@ class ArticleResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+
         ];
     }
 

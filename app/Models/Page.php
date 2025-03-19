@@ -9,6 +9,9 @@ class Page extends Model
 {
 
     use HasFactory;
-    protected $fillable = ['title','image','content','status'];
-    
+    protected $fillable = ['title','image','content'];
+    public function getImageAttribute($value)
+    {
+        return $value ?? 'https://i.postimg.cc/L6pL1Zkr/NoImage.png';
+    }
 }

@@ -17,11 +17,13 @@ class Games extends Model
         'image_path',
         'release_date',
         'download_link',
-        'status',
         'developer_id',
         'publisher_id'
     ];
-
+    public function getImageAttribute($value)
+    {
+        return $value ?? 'https://i.postimg.cc/L6pL1Zkr/NoImage.png';
+    }
     public function developer()
     {
         return $this->belongsTo(Member::class, 'developer_id');
@@ -32,7 +34,7 @@ class Games extends Model
         return $this->belongsTo(Member::class, 'publisher_id');
     }
 
-    public function genres()
+                public function genres()
     {
         return $this->belongsToMany(Genres::class, 'game_genres', 'game_id', 'genre_id');
     }

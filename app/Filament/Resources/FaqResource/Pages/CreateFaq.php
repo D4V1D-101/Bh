@@ -10,7 +10,7 @@ use Filament\Notifications\Notification;
 class CreateFaq extends CreateRecord
 {
     protected static string $resource = FaqResource::class;
-    
+
 
     protected function getRedirectUrl(): string
     {

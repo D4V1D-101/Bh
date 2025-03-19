@@ -2,44 +2,27 @@
 
 namespace App\Exceptions;
 
-use Throwable;
-use Illuminate\Http\Response;
-use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Throwable;
+use Illuminate\Database\QueryException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Http\Response; // A helyes Response osztály használata
 
 class Handler extends ExceptionHandler
 {
-    /**
-     * The list of the inputs that are never flashed to the session on validation exceptions.
-     *
-     * @var array<int, string>
-     */
-    protected $dontFlash = [
-        'current_password',
-        'password',
-        'password_confirmation',
-    ];
-
-    /**
-     * Register the exception handling callbacks for the application.
-     */
-    public function register(): void
-    {
-        $this->reportable(function (Throwable $e) {
-            //
-        });
-    }
     public function render($request, Throwable $exception): Response
-{
-    if ($exception instanceof QueryException) {
-        return response()->view('errors.database', [], 500);
-    }
+    {
+        if ($exception instanceof QueryException) {
+            return response()->view('errors.database', [], 500);
+        }
 
-    if ($exception instanceof NotFoundHttpException) {
-        return response()->view('errors.404', [], 404);
-    }
+        if ($exception instanceof NotFoundHttpException) {
+            return response()->view('errors.404', [], 404);
+        }
+        if ($exception instanceof NotFoundHttpException) {
+            return response()->view('errors.403', [], 403);
+        }
 
-    return parent::render($request, $exception);
-}
+        return parent::render($request, $exception);
+    }
 }

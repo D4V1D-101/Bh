@@ -3,20 +3,16 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CategoryResource\Pages;
-use App\Filament\Resources\CategoryResource\RelationManagers;
 use App\Models\Genres;
 use Filament\Forms;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Set;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Support\Str;
+use Closure;
 
 class CategoryResource extends Resource
 {
@@ -28,11 +24,20 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')->required()->placeholder('Name')
-                ->live(onBlur: true)
-                ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
-                TextInput::make('slug')->required()->placeholder('Slug')->disabled(),
-
+                TextInput::make('name')
+                    ->required()
+                    ->placeholder('Name')
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(function (Forms\Set $set, ?string $state) {
+                        if (!empty($state)) {
+                            $set('slug', Str::slug($state));
+                        } else {
+                            $set('slug', null);
+                        }
+                    }),
+                TextInput::make('slug')
+                    ->placeholder('Slug')
+                    ->disabled(),
             ]);
     }
 
@@ -40,11 +45,8 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name'),
-                TextColumn::make('slug')
-            ])
-            ->filters([
-                //
+                TextColumn::make('name')->searchable(),
+                TextColumn::make('slug'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -56,12 +58,7 @@ class CategoryResource extends Resource
             ]);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
+
 
     public static function getPages(): array
     {

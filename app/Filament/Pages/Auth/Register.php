@@ -74,14 +74,14 @@ class Register extends SimplePage
             $data = $this->form->getState();
             $hashData = User::hashPasswordWithSalt($data['password']);
 
-            // Töröljük a passwordConfirmation mezőt és a password mezőt
+
             unset($data['passwordConfirmation'], $data['password']);
 
-            // Bővítsük az adatokat a hash értékkel
-            $data['password_hash'] = $hashData['password_hash'];
-            $data['role'] = 'USER'; // Alapértelmezett szerep
 
-            // Közvetlenül a User modelt használjuk
+            $data['password_hash'] = $hashData['password_hash'];
+            $data['role'] = 'USER';
+
+
             return User::create($data);
         });
 
@@ -110,22 +110,22 @@ class Register extends SimplePage
      */
     protected function handleRegistration(array $data): Model
     {
-        // Argon2id hashelés
+
         $hashData = User::hashPasswordWithSalt($data['password']);
 
-        // Töröljük a passwordConfirmation mezőt, mert már nincs rá szükség
+
         if (isset($data['passwordConfirmation'])) {
             unset($data['passwordConfirmation']);
         }
 
-        // Töröljük a password mezőt is, hiszen helyette a hash-t tároljuk
+
         if (isset($data['password'])) {
             unset($data['password']);
         }
 
-        // Hozzáadjuk a password_hash mezőt
+
         $data['password_hash'] = $hashData['password_hash'];
-        $data['role'] = 'USER'; // Alapértelmezett szerep
+        $data['role'] = 'USER';
 
         return $this->getUserModel()::create($data);
     }

@@ -16,7 +16,11 @@ class User extends Authenticatable implements FilamentUser
 
     const ROLE_ADMIN = 'ADMIN';
     const ROLE_USER = 'USER';
-
+    const ROLES =
+    [
+        self::ROLE_ADMIN => 'Admin',
+        self::ROLE_USER => 'User',
+    ];
     protected $fillable = [
         'name',
         'email',
@@ -34,7 +38,7 @@ class User extends Authenticatable implements FilamentUser
 
     protected $rememberTokenName = 'token';
 
-    // Tokenok kapcsolata
+
     public function tokens()
     {
         return $this->hasMany(Token::class);
@@ -42,33 +46,33 @@ class User extends Authenticatable implements FilamentUser
 
     public static function hashPasswordWithSalt(string $password): array
     {
-        // Generate a random salt - this will be incorporated into the hash
+
         $salt = random_bytes(16);
 
-        // Use PHP's native Argon2id function with matching parameters to C#
+
         $options = [
-            'memory_cost' => 65536, // 64MB, same as in C#
-            'time_cost' => 4,       // 4 iterations, same as in C#
-            'threads' => 1,         // Parallelism, same as in C#
+            'memory_cost' => 65536,
+            'time_cost' => 4,
+            'threads' => 1,
         ];
 
-        // Hash the password with the salt
+
         $hash = password_hash($password, PASSWORD_ARGON2ID, $options);
 
         return [
             'password_hash' => $hash,
-            // No longer returning separate salt
+
         ];
     }
 
     public static function verifyPassword(string $password, string $storedHash): bool
     {
-        // Verify password using the stored hash
-        // The salt is already incorporated in the hash
+
+
         return password_verify($password, $storedHash);
     }
 
-    // Remember token lekérése
+
     public function getRememberToken()
     {
         return $this->tokens()
@@ -77,21 +81,21 @@ class User extends Authenticatable implements FilamentUser
             ->value('token');
     }
 
-    // Remember token beállítása
+
     public function setRememberToken($value)
     {
-        // Töröljük a felhasználó összes korábbi remember tokenét
+
         $this->deleteRememberToken();
 
-        // Létrehozunk egy új tokent
+
         $this->tokens()->create([
-            'device' => 0, // Asztali eszköz
+            'device' => 0,
             'token' => $value,
-            'expiry_date' => now()->addDays(7) // 7 napos érvényesség
+            'expiry_date' => now()->addDays(7)
         ]);
     }
 
-    // Remember token törlése
+
     public function deleteRememberToken()
     {
         return $this->tokens()
@@ -99,19 +103,19 @@ class User extends Authenticatable implements FilamentUser
             ->delete();
     }
 
-    // Remember token neve
+
     public function getRememberTokenName()
     {
         return $this->rememberTokenName;
     }
 
-    // Jogosultságok ellenőrzése a panelhez
+
     public function canAccessPanel(Panel $panel): bool
     {
-        return $this->isAdmin(); // Csak adminok férhetnek hozzá
+        return $this->isAdmin();
     }
 
-    // Admin jogosultság ellenőrzése
+
     public function isAdmin(): bool
     {
         return $this->role === self::ROLE_ADMIN;

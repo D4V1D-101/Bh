@@ -54,7 +54,7 @@ class FaqResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('question')
+                TextColumn::make('question')->searchable()
             ])
             ->filters([
                 //
