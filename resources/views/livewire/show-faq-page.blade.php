@@ -21,7 +21,7 @@
                     <h2 class="accordion-header accordion-button h5 border-0 text-center"
                     id="heading-{{ $x }}" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapse-{{ $x }}" aria-expanded="true"
-                    aria-controls="collapse{{ $x }}">
+                    aria-controls="#collapse{{ $x }}">
                     {{ $faq->question }}
                     </h2>
                     <div id="collapse-{{ $x }}"

@@ -7,13 +7,15 @@ use Illuminate\Support\Facades\Redirect;
 
 class RedirectToHome extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-home';
+    protected static ?string $navigationIcon = 'heroicon-o-arrow-left';
 
     protected static string $view = 'filament.pages.redirect-to-home';
 
     protected static ?string $slug = 'home-redirect';
 
-    protected static ?string $navigationLabel = 'Redirect Home';
+    protected static ?int $navigationSort = 999;
+
+    protected static ?string $navigationLabel = 'Back to Home';
 
     public function mount()
     {
