@@ -34,7 +34,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav m-auto mb-2 mb-lg-0">
                     <li class="nav-item"> <a wire:navigate class="nav-link" href="{{route('home')}}">Home</a></li>
-                    <li class="nav-item "> <a wire:navigate class="nav-link" href="{{route("page",2)}}">About Us</a></li>
+                    <li class="nav-item "> <a wire:navigate class="nav-link" href="{{route('page',2)}}">About Us</a></li>
                     <li class="nav-item "> <a wire:navigate class="nav-link" href="{{route('servicesPage')}}">Games</a></li>
                     <li class="nav-item "> <a wire:navigate class="nav-link" href="{{ route('teamPage') }}">Our Team</a></li>
                     <li class="nav-item "><a wire:navigate class="nav-link " href="{{ route('blog') }}">News</a></li>
@@ -86,7 +86,7 @@
                 <div class="footer-widget">
                     <h5 class="mb-4 text-primary font-secondary">Quick Links</h5>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><a href="{{route("page",1)}}" wire:navigate>About Us</a></li>
+                        <li class="mb-2"><a href="{{route('page',1)}}" wire:navigate>About Us</a></li>
                         <li class="mb-2"><a href="#!">Contact Us</a></li>
                         <li class="mb-2"><a href="#!">Blog</a></li>
                         <li class="mb-2"><a href="#!">Team</a></li>
@@ -97,8 +97,8 @@
                 <div class="footer-widget">
                     <h5 class="mb-4 text-primary font-secondary">Other Links</h5>
                     <ul class="list-unstyled">
-                        <li class="list-inline-item me-4"><a class="text-black" href="{{route("page",2)}}" wire:navigate>Privacy Policy</a></li>
-                        <li class="list-inline-item me-4"><a class="text-black" href="{{route("page",1)}}" wire:navigate>Terms &amp; Conditions</a></li>
+                        <li class="list-inline-item me-4"><a class="text-black" href="{{route('page',2)}}" wire:navigate>Privacy Policy</a></li>
+                        <li class="list-inline-item me-4"><a class="text-black" href="{{route('page',1)}}" wire:navigate>Terms &amp; Conditions</a></li>
                     </ul>
                 </div>
             </div>

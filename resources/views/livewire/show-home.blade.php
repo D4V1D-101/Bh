@@ -1,5 +1,7 @@
+
 <main>
-    <section class="banner bg-tertiary position-relative overflow-hidden">
+
+<section class="banner bg-tertiary position-relative overflow-hidden">
         <div class="container">
           <div class="row align-items-center justify-content-center">
             <div class="col-lg-6 mb-5 mb-lg-0">
@@ -23,13 +25,13 @@
 
 
 
-      <!-- sdasdasdasd -->
+
       <section class="banner bg-tertiaryHome position-relative overflow-hidden">
     <div class="container">
-        <div class="row align-items-center justify-content-center"> <!-- 100vh magasság a középre igazításhoz -->
-            <div class="col-lg-6 text-center"> <!-- text-center osztály a középre igazításhoz -->
+        <div class="row align-items-center justify-content-center">
+            <div class="col-lg-6 text-center">
                 <div class="block">
-                    <h1 class="text-capitalize mb-4 no-wrap">Download Our Launcher</h1> <!-- no-wrap osztály hozzáadása -->
+                    <h1 class="text-capitalize mb-4 no-wrap">Download Our Launcher</h1>
                     <p class="mb-4">Play and enjoy your time</p>
                     <a href="{{ route('download.route') }}" class="btn btn-outline-primary authbutton">Download</a>
                 </div>
@@ -38,7 +40,7 @@
     </div>
 </section>
 
-<!-- asdsadasdasdasdd -->
+
 
       <section class="section">
         <div class="container">

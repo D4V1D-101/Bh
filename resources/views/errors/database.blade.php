@@ -10,7 +10,7 @@
 </head>
 <body>
     <h1>This Action not available</h1>
-    <a href="{{ route('filament.admin.pages.dashboard') }}" class="btn btn-outline-primary authbutton me-2">Back To Admin Panel</a>
+    <a href="{{ route('filament.admin.pages.dashboard') }}" class="btn btn-outline-primary authbutton me-2">Go Back</a>
 
 </body>
 </html>
