@@ -42,14 +42,8 @@ class ServiceResource extends Resource
                     ])->columnSpan(2),
                 DatePicker::make('release_date')->format('Y/m/d')->label('Release Date')->columnSpan(2)->required(),
                 TextInput::make('download_link')->url()->label('Download Link')->placeholder('Enter URL')->columnSpan(2),
-                TextInput::make('image_path')->url()->label('Image Path')->placeholder('Enter URL')->columnSpan(2)->rules([
-                    'required',
-                    'url',
-                    'ends_with:.jpg,.jpeg,.png'
-                ])
-                ->validationMessages([
-                    'ends_with' => 'The URL must ends with jpg / jpeg /png'
-                ]),
+                TextInput::make('image_path')->url()->label('Image Path')->placeholder('Enter URL')->columnSpan(2)->rules(['required','url','ends_with:.jpg,.jpeg,.png'])
+                ->validationMessages(['ends_with' => 'The URL must ends with jpg / jpeg /png']),
                 Select::make('publisher_id')
                     ->label('Publisher')
                     ->relationship('publisher', 'name')

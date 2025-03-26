@@ -47,14 +47,8 @@ class PageResource extends Resource
                     'codeBlock',
                     'align',
                 ])->columnSpan(2),
-                TextInput::make('image')->url()->label('Image')->placeholder('Enter URL')->columnSpan(2)->rules([
-                    'required',
-                    'url',
-                    'ends_with:.jpg,.jpeg,.png'
-                ])
-                ->validationMessages([
-                    'ends_with' => 'The URL must ends with jpg / jpeg /png'
-                ]),
+                TextInput::make('image')->url()->label('Image')->placeholder('Enter URL')->columnSpan(2)->rules(['required','url','ends_with:.jpg,.jpeg,.png'])
+                ->validationMessages(['ends_with' => 'The URL must ends with jpg / jpeg /png']),
 
             ]);
     }

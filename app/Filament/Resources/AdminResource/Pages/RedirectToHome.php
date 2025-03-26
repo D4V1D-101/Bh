@@ -19,6 +19,6 @@ class RedirectToHome extends Page
 
     public function mount()
     {
-        return Redirect::route('home'); // Vagy bármilyen más útvonal
+        return Redirect::route('home');
     }
 }

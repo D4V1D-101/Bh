@@ -14,24 +14,24 @@ class CustomUser extends Controller
         $email = $request->input('email');
         $password = $request->input('password');
 
-        // Ellenőrizzük, létezik-e a felhasználó az adatbázisban
+
         $user = User::where('email', $email)->first();
 
         if (!$user) {
             return "Felhasználó nem található ezzel az email címmel: {$email}";
         }
 
-        // Ellenőrizzük, hogy admin-e
+
         if (!$user->isAdmin()) {
             return "A felhasználó nem admin: {$email}";
         }
 
-        // Ellenőrizzük a jelszót
+
         if (Hash::check($password, $user->password)) {
             return "Hibás jelszó a következő felhasználóhoz: {$email}";
         }
 
-        // Próbáljuk meg a bejelentkezést
+
         $credentials = [
             'email' => $email,
             'password' => $password

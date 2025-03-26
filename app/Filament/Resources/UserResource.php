@@ -43,11 +43,8 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-
                 Tables\Columns\TextColumn::make('email')->searchable(),
-
                 Tables\Columns\TextColumn::make('role')
-
             ])
             ->filters([
                 //
@@ -65,14 +62,14 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+
         ];
     }
 
     public static function canCreate(): bool
     {
        return false;
-    }       
+    }
     public static function getPages(): array
     {
         return [

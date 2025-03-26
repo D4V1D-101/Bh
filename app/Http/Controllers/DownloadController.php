@@ -2,7 +2,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+//kell
 class DownloadController extends Controller
 {
     public function download()

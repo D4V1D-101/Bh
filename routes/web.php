@@ -22,9 +22,6 @@ Route::get('/faqs', ShowFaqPage::class)->name('faqs');
 Route::get('/page/{id}', ShowPage::class)->name('page');
 Route::get('/blog', ShowBlog::class)->name('blog');
 Route::get('/blog/{id}', BlogDetail::class)->name('blogDetail');
-
-
-
 Route::match(['get', 'post'], '/user-logout', function () {
     Auth::logout();
     session()->invalidate();

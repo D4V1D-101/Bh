@@ -26,7 +26,6 @@ class ShowBlog extends Component
                 abort(404);
             }
 
-            // Get articles related to games that belong to this genre
             $articles = Article::whereHas('game', function($query) use ($category) {
                 $query->whereHas('genres', function($q) use ($category) {
                     $q->where('genres.id', $category->id);

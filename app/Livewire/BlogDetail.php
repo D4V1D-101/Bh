@@ -23,7 +23,6 @@ class BlogDetail extends Component
             ->limit(3)
             ->get();
 
-        // Get related articles from the same game
         $relatedArticles = Article::where('id', '!=', $this->articleId)
             ->where('game_id', $article->game_id)
             ->orderBy('created_at', 'DESC')

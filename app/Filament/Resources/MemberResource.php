@@ -32,14 +32,8 @@ class MemberResource extends Resource
                 TextInput::make('designation')->required()->placeholder('Enter Designation'),
                 TextInput::make('git_url')->url()->label('GitHub URL')->placeholder('Enter URL'),
                 TextInput::make('linkedin_url')->url()->label('LinkedIn URL')->placeholder('Enter URL'),
-                TextInput::make('image')->url()->label('image')->placeholder('Enter URL')->columnSpan(2) ->rules([
-                    'required',
-                    'url',
-                    'ends_with:.jpg,.jpeg,.png'
-                ])
-                ->validationMessages([
-                    'ends_with' => 'The URL must ends with jpg / jpeg /png'
-                ]),
+                TextInput::make('image')->url()->label('image')->placeholder('Enter URL')->columnSpan(2) ->rules(['required','url','ends_with:.jpg,.jpeg,.png'])
+                ->validationMessages(['ends_with' => 'The URL must ends with jpg / jpeg /png']),
 
             ]);
     }

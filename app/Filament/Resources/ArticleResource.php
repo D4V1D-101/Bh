@@ -59,14 +59,8 @@ class ArticleResource extends Resource
             ->url()
             ->placeholder('Enter URL')
             ->columnSpan(2)
-            ->rules([
-                'required',
-                'url',
-                'ends_with:.jpg,.jpeg,.png'
-            ])
-            ->validationMessages([
-                'ends_with' => 'The URL must ends with jpg / jpeg /png'
-            ]),
+            ->rules(['required','url','ends_with:.jpg,.jpeg,.png'])
+            ->validationMessages(['ends_with' => 'The URL must ends with jpg / jpeg /png']),
                 Select::make('game_id')
                 ->required()
                 ->label('Game')

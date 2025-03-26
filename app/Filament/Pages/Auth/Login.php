@@ -103,9 +103,7 @@ class Login extends SimplePage
         return $form;
     }
 
-    /**
-     * @return array<int | string, string | Form>
-     */
+
     protected function getForms(): array
     {
         return [
@@ -168,9 +166,7 @@ class Login extends SimplePage
         return __('filament-panels::pages/auth/login.heading');
     }
 
-    /**
-     * @return array<Action | ActionGroup>
-     */
+   
     protected function getFormActions(): array
     {
         return [

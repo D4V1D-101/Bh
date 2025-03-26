@@ -21,7 +21,7 @@ return [
 
     'providers' => [
         'users' => [
-            'driver' => 'eloquent',  // Először ellenőrizd, hogy ez 'eloquent' legyen, ne 'custom'
+            'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
     ],

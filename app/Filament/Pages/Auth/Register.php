@@ -27,23 +27,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
-/**
- * @property Form $form
- */
+
 class Register extends SimplePage
 {
     use CanUseDatabaseTransactions;
     use InteractsWithFormActions;
     use WithRateLimiting;
 
-    /**
-     * @var view-string
-     */
+
     protected static string $view = 'filament-panels::pages.auth.register';
 
-    /**
-     * @var array<string, mixed> | null
-     */
+
     public ?array $data = [];
 
     protected string $userModel;
@@ -105,9 +99,7 @@ class Register extends SimplePage
             ->danger();
     }
 
-    /**
-     * @param  array<string, mixed>  $data
-     */
+
     protected function handleRegistration(array $data): Model
     {
 
@@ -157,9 +149,7 @@ class Register extends SimplePage
         return $form;
     }
 
-    /**
-     * @return array<int | string, string | Form>
-     */
+
     protected function getForms(): array
     {
         return [
@@ -250,9 +240,6 @@ class Register extends SimplePage
         return __('filament-panels::pages/auth/register.heading');
     }
 
-    /**
-     * @return array<Action | ActionGroup>
-     */
     protected function getFormActions(): array
     {
         return [
@@ -272,10 +259,6 @@ class Register extends SimplePage
         return true;
     }
 
-    /**
-     * @param  array<string, mixed>  $data
-     * @return array<string, mixed>
-     */
     protected function mutateFormDataBeforeRegister(array $data): array
     {
         return $data;

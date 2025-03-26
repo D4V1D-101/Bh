@@ -11,7 +11,7 @@ class LoginController extends Controller
 {
     public function login(Request $request)
     {
-        // Validáljuk a bejövő kérést
+
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
@@ -19,17 +19,17 @@ class LoginController extends Controller
 
         $credentials = $request->only('email', 'password');
 
-        // Próbáljuk meg a felhasználót hitelesíteni
+
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
 
-            // Ellenőrizzük, hogy a felhasználó admin-e
+
             if (!$user->isAdmin()) {
                 Auth::logout();
                 return response()->json(['error' => 'Forbidden'], 403);
             }
 
-            // További logika a sikeres bejelentkezéshez
+     
             return response()->json(['message' => 'Login successful']);
         }
 
