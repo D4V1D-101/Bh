@@ -22,6 +22,7 @@ class Handler extends ExceptionHandler
         if ($exception instanceof NotFoundHttpException) {
             return response()->view('errors.403', [], 403);
         }
+        
 
         return parent::render($request, $exception);
     }

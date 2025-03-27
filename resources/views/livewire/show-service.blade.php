@@ -24,10 +24,12 @@
 
 			<div class="col-lg-12 text-center">
 				<div class="content">
-                    <h2 class="mb-3">{{$service->release_date}}</h2>
-					{!!$service->description!!}
-                    <br>
+
+                    <h2 class="mb-3">Release Date: {{ \Carbon\Carbon::parse($service->release_date)->format('Y M d') }}</h2>
+
                     <img src="{{ asset($service->image_path) }}" alt="" class="image-fluid">
+                    <br>
+					{!!$service->description!!}
 				</div>
 			</div>
 		</div>

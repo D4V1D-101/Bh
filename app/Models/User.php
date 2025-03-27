@@ -39,9 +39,10 @@ class User extends Authenticatable implements FilamentUser
     protected $rememberTokenName = 'token';
 
 
+    use HasApiTokens, HasFactory, Notifiable;
     public function tokens()
     {
-        return $this->hasMany(Token::class);
+        return $this->hasMany(Token::class, 'user_id');
     }
 
     public static function hashPasswordWithSalt(string $password): array
