@@ -16,24 +16,22 @@
             @php
             $x=1;
             @endphp
-            @foreach ($faqs as $faq)
-                <div class="accordion-item">
-                    <h2 class="accordion-header accordion-button h5 border-0 text-center"
-                    id="heading-{{ $x }}" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapse-{{ $x }}" aria-expanded="true"
-                    aria-controls="#collapse-{{ $x }}">
-                    {{ $faq->question }}
-                    </h2>
-                    <div id="collapse-{{ $x }}"
+           @foreach ($faqs as $faq)
+           <div class="accordion-item">
+               <h2 class="accordion-header accordion-button h5 border-0 text-center"
+                   id="heading-{{ $x }}" type="button" data-bs-toggle="collapse"
+                   data-bs-target="#collapse-{{ $x }}" aria-expanded="true"
+                   aria-controls="collapse-{{ $x }}">
+                   {{ $faq->question }}
+               </h2>
+               <div id="collapse-{{ $x }}"
                     class="accordion-collapse collapse border-0 text-center"
                     aria-labelledby="heading-{{ $x }}" data-bs-parent="#accordionFAQ">
-                    <div class="accordion-body py-0 content">{!! $faq->answer !!}</div>
-                    </div>
-                </div>
-                @php
-                $x++;
-                @endphp
-            @endforeach
+                   <div class="accordion-body py-0 content">{!! $faq->answer !!}</div>
+               </div>
+           </div>
+           @php $x++; @endphp
+       @endforeach
             @endif
         </div>
       </div>

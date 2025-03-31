@@ -29,7 +29,10 @@
 
                     <img src="{{ asset($service->image_path) }}" alt="" class="image-fluid">
                     <br>
-					{!!$service->description!!}
+                    <div class="content text-center">
+
+                        {!!$service->description!!}
+                    </div>
 				</div>
 			</div>
 		</div>
