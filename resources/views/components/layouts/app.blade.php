@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="hu">
 <head>
     <meta charset="utf-8">
     <title>Brickhub</title>
@@ -106,6 +107,7 @@
 
 <script src="{{asset('/front/plugins/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('/front/plugins/bootstrap/bootstrap.min.js')}}"></script>
+<script src="{{asset('/front/plugins/slick/slick.min.js')}}"></script>
 <script src="{{asset('/front/js/script.js')}}"></script>
 
 @livewireScripts
