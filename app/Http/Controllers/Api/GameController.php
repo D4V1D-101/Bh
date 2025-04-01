@@ -9,7 +9,7 @@ class GameController extends Controller
 {
     public function index()
     {
-        $games = Games::select([
+        return response()->json(Games::select([
             'name',
             'short_desc',
             'exe_name',
@@ -19,14 +19,12 @@ class GameController extends Controller
             'download_link',
             'developer_id',
             'publisher_id'
-        ])->get();
-
-        return response()->json($games);
+        ])->get());
     }
 
     public function show($id)
     {
-        $game = Games::select([
+        return response()->json(Games::select([
             'name',
             'short_desc',
             'exe_name',
@@ -36,8 +34,49 @@ class GameController extends Controller
             'download_link',
             'developer_id',
             'publisher_id'
-        ])->findOrFail($id);
-
-        return response()->json($game);
+        ])->findOrFail($id));
     }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'short_desc' => 'required|string|max:255',
+            'exe_name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'image_path' => 'required|string|max:255',
+            'release_date' => 'required|date',
+            'download_link' => 'required|string|max:255',
+            'developer_id' => 'required|integer|exists:developers,id',
+            'publisher_id' => 'required|integer|exists:publishers,id',
+        ]);
+
+        $game = Games::create($validated);
+
+        return response()->json([
+            'data' => $game,
+            'message' => 'Game created successfully!'
+        ], 201);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $game = Games::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'sometimes|required|string|max:255',
+            'short_desc' => 'sometimes|required|string|max:255',
+            'exe_name' => 'sometimes|required|string|max:255',
+            'description' => 'sometimes|required|string',
+
+        ]);
+
+        $game->update($validated);
+
+        return response()->json([
+            'message' => 'Game updated successfully!',
+            'game' => $game
+        ]);
+    }
+
 }
