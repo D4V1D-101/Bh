@@ -10,25 +10,12 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::select([
-            'id',
-            'name',
-            'email',
-            'role'
-        ])->get();
-        dd($users);
-        return response()->json($users);
+        return response()->json(User::select(['id', 'name', 'email', 'role'])->get());
     }
 
     public function show($id)
     {
-        $user = User::select([
-            'id',
-            'name',
-            'email',
-            'role'
-        ])->findOrFail($id);
-        dd($user);
-        return response()->json($user);
+        return response()->json(User::select(['id', 'name', 'email', 'role'])->findOrFail($id));
     }
+
 }

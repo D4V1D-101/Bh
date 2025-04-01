@@ -37,27 +37,7 @@ class GameController extends Controller
         ])->findOrFail($id));
     }
 
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'short_desc' => 'required|string|max:255',
-            'exe_name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'image_path' => 'required|string|max:255',
-            'release_date' => 'required|date',
-            'download_link' => 'required|string|max:255',
-            'developer_id' => 'required|integer|exists:developers,id',
-            'publisher_id' => 'required|integer|exists:publishers,id',
-        ]);
-
-        $game = Games::create($validated);
-
-        return response()->json([
-            'data' => $game,
-            'message' => 'Game created successfully!'
-        ], 201);
-    }
+  
 
     public function update(Request $request, $id)
     {
