@@ -14,15 +14,10 @@ class CreateArticlesTable extends Migration
             $table->string('author', 255);
             $table->string('image', 255)->nullable();
             $table->text('content');
-
             $table->unsignedBigInteger('game_id');
-
             $table->timestamps();
 
-            $table->foreign('game_id')
-                  ->references('id')
-                  ->on('games')
-                  ->onDelete('cascade');
+            $table->foreign('game_id')->references('id')->on('games')->onDelete('cascade');
         });
     }
 

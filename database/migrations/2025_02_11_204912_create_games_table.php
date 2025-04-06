@@ -17,21 +17,12 @@ class CreateGamesTable extends Migration
             $table->dateTime('release_date');
             $table->string('download_link', 255)->nullable();
             $table->string('short_desc', 35)->nullable();
-
             $table->unsignedBigInteger('developer_id');
             $table->unsignedBigInteger('publisher_id');
-
             $table->timestamps();
 
-            $table->foreign('developer_id')
-                  ->references('id')
-                  ->on('members')
-                  ->onDelete('cascade');
-
-            $table->foreign('publisher_id')
-                  ->references('id')
-                  ->on('members')
-                  ->onDelete('cascade');
+            $table->foreign('developer_id')->references('id')->on('members')->onDelete('cascade');
+            $table->foreign('publisher_id')->references('id')->on('members')->onDelete('cascade');
         });
     }
 

@@ -9,7 +9,7 @@ class CreateReviewsTable extends Migration
     public function up()
     {
         Schema::create('reviews', function (Blueprint $table) {
-            $table->id();
+            $table->id(); 
             $table->unsignedBigInteger('game_id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedTinyInteger('rating');
@@ -17,15 +17,8 @@ class CreateReviewsTable extends Migration
             $table->text('review_text');
             $table->timestamps();
 
-            $table->foreign('game_id')
-                  ->references('id')
-                  ->on('games')
-                  ->onDelete('cascade');
-
-            $table->foreign('user_id')
-                  ->references('id')
-                  ->on('users')
-                  ->onDelete('cascade');
+            $table->foreign('game_id')->references('id')->on('games')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
