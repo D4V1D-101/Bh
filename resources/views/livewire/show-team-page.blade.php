@@ -22,7 +22,6 @@
             <div class="row justify-content-center">
                 <div class="col-12">
                     <div class="section-title text-center">
-                        <p class="text-primary text-uppercase fw-bold mb-3">Questions You Have</p>
                         <h1>People Behind Us</h1>
                         <p class="mb-0">All the publishers and developers</p>
                     </div>

@@ -7,7 +7,7 @@ use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-  
+
     public function register(): void
     {
         $this->app->extend('hash', function ($service, $app) {
@@ -24,6 +24,6 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        //
+        
     }
 }
