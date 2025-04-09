@@ -18,17 +18,17 @@ class CustomUser extends Controller
         $user = User::where('email', $email)->first();
 
         if (!$user) {
-            return "Felhasználó nem található ezzel az email címmel: {$email}";
+            return "This user is not found with this email: {$email}";
         }
 
 
         if (!$user->isAdmin()) {
-            return "A felhasználó nem admin: {$email}";
+            return "The user is not admin: {$email}";
         }
 
 
         if (Hash::check($password, $user->password)) {
-            return "Hibás jelszó a következő felhasználóhoz: {$email}";
+            return "Wrong Password for this user: {$email}";
         }
 
 
@@ -38,9 +38,9 @@ class CustomUser extends Controller
         ];
 
         if (Auth::attempt($credentials)) {
-            return "Sikeres bejelentkezés mint: " . Auth::user()->name;
+            return "Login successful as: " . Auth::user()->name;
         } else {
-            return "Auth::attempt sikertelen. Ellenőrizd a log fájlokat további információért.";
+            return "Auth::attempt error.";
         }
     }
 }

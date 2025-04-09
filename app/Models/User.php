@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Filament\Models\Contracts\FilamentUser;
@@ -48,7 +47,7 @@ class User extends Authenticatable implements FilamentUser
     public static function hashPasswordWithSalt(string $password): array
     {
 
-        $salt = random_bytes(16);
+       /*  $salt = random_bytes(16); */
 
 
         $options = [
@@ -62,7 +61,6 @@ class User extends Authenticatable implements FilamentUser
 
         return [
             'password_hash' => $hash,
-
         ];
     }
 

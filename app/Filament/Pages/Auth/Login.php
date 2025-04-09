@@ -65,7 +65,6 @@ class Login extends SimplePage
             $this->throwFailureValidationException();
         }
 
-        // Check password using our custom verification method
         if (!User::verifyPassword($data['password'], $user->password_hash)) {
             $this->throwFailureValidationException();
         }
