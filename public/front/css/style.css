@@ -3793,6 +3793,7 @@ textarea.form-control-lg {
   }
   text-capitalize{
     word-spacing: normal;
+    word-wrap: break-word;
   }
 }
 @media (min-width: 768px) {
@@ -5937,7 +5938,6 @@ textarea.form-control-lg {
 
 .text-capitalize {
   text-transform: capitalize !important;
-  white-space: nowrap;
   max-width: 100%;
   text-align: center;
 }
