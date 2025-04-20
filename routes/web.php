@@ -24,24 +24,12 @@ Route::get('/page/{id}', ShowPage::class)->name('page');
 Route::get('/blog', ShowBlog::class)->name('blog');
 Route::get('/blog/{id}', BlogDetail::class)->name('blogDetail');Route::match(['get', 'post'], '/user-logout', function () {
     $user = Auth::user();
-
     if ($user) {
         \App\Models\Token::where('user_id', $user->id)->delete();
     }
-
     Auth::logout();
     session()->invalidate();
     session()->regenerateToken();
-
     return redirect('/');
 })->name('user.logout');
-
-
-/* Route::match(['get', 'post'], '/user-logout', function () {
-    Auth::logout();
-    session()->invalidate();
-    session()->regenerateToken();
-    return redirect('/');
-})->name('user.logout'); */
-
 Route::get('/download', [DownloadController::class, 'download'])->name('download.route');
