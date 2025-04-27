@@ -9,7 +9,7 @@
     @livewireStyles
 </head>
 <body>
-    <h1>Please go back to our Home Page</h1>
+    <h1>Please go back to our Home Pageas</h1>
     <a href="{{route('home')}}" class="btn btn-outline-primary authbutton me-2">Back to Home Page</a>
 </body>
 </html>

@@ -7,11 +7,12 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('pages', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->integer('id')->autoIncrement();
-            $table->string('title', 255);
-            $table->string('image', 255)->nullable();
-            $table->text('content');
+            $table->string('name', 255);
+            $table->string('email', 255);
+            $table->string('password_hash', 255);
+            $table->string('role', 255)->default('USER');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });
@@ -19,6 +20,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('pages');
+        Schema::dropIfExists('users');
     }
 };

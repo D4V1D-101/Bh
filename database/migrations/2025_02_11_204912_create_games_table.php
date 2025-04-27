@@ -1,15 +1,14 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGamesTable extends Migration
+return new class extends Migration
 {
-    public function up()
+    public function up(): void
     {
         Schema::create('games', function (Blueprint $table) {
-            $table->id();
+            $table->integer('id')->autoIncrement();
             $table->string('name', 255);
             $table->string('exe_name', 255);
             $table->text('description');
@@ -17,17 +16,18 @@ class CreateGamesTable extends Migration
             $table->dateTime('release_date');
             $table->string('download_link', 255)->nullable();
             $table->string('short_desc', 35)->nullable();
-            $table->unsignedBigInteger('developer_id');
-            $table->unsignedBigInteger('publisher_id');
-            $table->timestamps();
+            $table->integer('developer_id');
+            $table->integer('publisher_id');
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
 
-            $table->foreign('developer_id')->references('id')->on('members')->onDelete('cascade');
-            $table->foreign('publisher_id')->references('id')->on('members')->onDelete('cascade');
+            $table->foreign('developer_id')->references('id')->on('members');
+            $table->foreign('publisher_id')->references('id')->on('members');
         });
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('games');
     }
-}
+};
