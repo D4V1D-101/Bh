@@ -116,5 +116,5 @@ The application will be available at `http://localhost:8000`
 After importing the sample data, you can use the following accounts to login:
 
 - **Admin User**:
-  - Email: admin@brickhub.com
+  - Email: admin@gmail.com
   - Password: admin
