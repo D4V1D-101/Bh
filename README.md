@@ -101,10 +101,6 @@ and insert the `brickhub_setup.sql`
 
 Import the sample data from the `brickhub_data.sql` file located in the project's root directory into your `brickhub` database. You can use a tool like phpMyAdmin or the MySQL command line:
 
-```bash
-mysql -u your_username -p brickhub < brickhub_data.sql
-```
-
 ### 9. Start the Development Server
 
 Start the Laravel development server:
