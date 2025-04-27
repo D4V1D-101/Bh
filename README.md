@@ -95,7 +95,6 @@ Run the database migrations:
 ```bash
 php artisan migrate
 ```
-and insert the `brickhub_setup.sql`
 
 ### 8. Import Sample Data
 
